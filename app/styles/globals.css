@@ -1,0 +1,286 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,700,900");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+}
+
+body {
+  color: white;
+  background: rgb(16, 19, 27);
+  margin: 0 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main {
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+/* TODO My styles (move later) */
+
+.section-card,
+.out-of-session-card,
+.section-card-detail {
+  background: rgb(24, 26, 37);
+  padding: 2rem;
+  border-radius: 5px;
+  margin-bottom: 4rem;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.section-card,
+.section-card-detail {
+  padding: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.loading-container {
+  padding: 2rem;
+  text-align: center;
+}
+
+.section-card-inner {
+  background-color: rgb(18 24 38 / 34%);
+  backdrop-filter: blur(4px);
+  padding: 2rem;
+  width: max-content;
+  max-width: 65%;
+  border-radius: 5px 0 0 5px;
+}
+
+.out-of-session-card {
+  text-align: center;
+}
+
+h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.section-card-detail h2 {
+  opacity: 0.5;
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+.out-of-session-card h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.section-card h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.section-card h3,
+.out-of-session-card h3 {
+  font-size: 1rem;
+  font-weight: 300;
+  opacity: 0.5;
+}
+
+#ls-keyart {
+  width: 100%;
+  height: auto;
+}
+
+.image-rounded {
+  border-radius: 5px;
+}
+
+.section-metadata {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 1rem 0;
+}
+
+.section-metadata:last-child {
+  margin-bottom: 0;
+}
+
+.section-metadata h4 {
+  font-weight: 300;
+  opacity: 0.5;
+  margin-bottom: 0.5rem;
+}
+
+.section-metadata p {
+  font-weight: 300;
+  opacity: 0.5;
+  font-size: 0.75rem;
+}
+
+.section-metadata .footnote {
+  margin-top: 2rem;
+  font-style: italic;
+}
+
+.section-metadata .footnote a {
+  color: gold;
+  text-decoration: underline;
+}
+
+.section-metadata img {
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-metadata img:last-child {
+  margin-right: 0;
+}
+
+.items-grid {
+  margin-bottom: 4rem;
+}
+
+.items-grid h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.items-grid-inner {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 1rem;
+}
+
+.item-card {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgb(24, 26, 37);
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.item-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.item-card-header p {
+  opacity: 0.5;
+}
+.item-card-body {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.item-card-body img {
+  object-fit: cover;
+  position: relative !important;
+}
+
+.item-unlock-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+  margin-top: 2rem;
+}
+
+.item-unlock-detail span {
+  width: 100%;
+  background-color: gray;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.item-unlock-detail .unlocked {
+  border: 2px solid rgb(50, 204, 117);
+  background-color: transparent;
+  color: rgb(50, 204, 117);
+}
+
+.item-unlock-detail .locked {
+  border: 2px solid rgb(204, 50, 50);
+  background-color: transparent;
+  color: rgb(204, 50, 50);
+}
+
+.item-unlock-prompt {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.item-unlock-prompt p {
+  opacity: 0.5;
+}
+
+.dev-warning {
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+  background: #dcbdbd;
+  color: hsl(0deg 93% 33%);
+  border: 2px solid #a20606;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.dev-warning span {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 890px) {
+  body {
+    margin: 0 0.5rem;
+  }
+
+  main {
+    margin: 1rem auto;
+  }
+
+  .section-card h2 {
+    font-size: 2rem;
+  }
+
+  .section-card-inner {
+    padding: 1rem;
+    max-width: none;
+    width: 100%;
+    border-radius: 5px;
+  }
+
+  .section-metadata img {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 0.75rem;
+  }
+
+  .section-metadata {
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .items-grid-inner {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .items-grid-inner {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
