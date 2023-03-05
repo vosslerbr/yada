@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "../../lib/prisma";
 import { Collectible } from "@prisma/client";
 import axios from "axios";
 

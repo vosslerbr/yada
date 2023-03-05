@@ -1,14 +1,17 @@
-import prisma from "@/lib/prisma";
-import { Stat } from "@prisma/client";
+import prisma from "../../lib/prisma";
+import { ActivityModifier } from "@prisma/client";
 import axios from "axios";
 
-const populateStatDefs = async (url: string) => {
+const populateActivityModifierDefs = async (url: string) => {
   try {
     const response = await axios.get("https://www.bungie.net" + url);
 
     const { data: json } = response;
 
-    await prisma.stat.deleteMany({});
+    // delete all the old join table records
+    await prisma.activityModifiersOnActivity.deleteMany({});
+
+    await prisma.activityModifier.deleteMany({});
 
     // make json into an array of objects
     const jsonArray = Object.keys(json).map((key) => {
@@ -16,32 +19,30 @@ const populateStatDefs = async (url: string) => {
 
       const definition = json[key];
 
-      const data: Stat = {
+      const data: ActivityModifier = {
         hash: numberHash,
         redacted: definition.redacted,
-        aggregationType: definition.aggregationType,
-        hasComputedBlock: definition.hasComputedBlock,
+        displayInNavMode: definition.displayInNavMode,
+        displayInActivitySelection: definition.displayInActivitySelection,
         blacklisted: definition.blacklisted,
         description: definition.displayProperties.description,
         name: definition.displayProperties.name,
         icon: definition.displayProperties.icon,
         hasIcon: definition.displayProperties.hasIcon,
         highResIcon: definition.displayProperties.highResIcon,
-        interpolate: definition.interpolate,
-        statCategory: definition.statCategory,
       };
 
       return data;
     });
 
-    await prisma.stat.createMany({
+    await prisma.activityModifier.createMany({
       data: jsonArray,
     });
 
-    console.log("Stat defs populated");
+    console.log("Activity modifier defs populated");
   } catch (error) {
     console.error(error);
   }
 };
 
-export default populateStatDefs;
+export default populateActivityModifierDefs;

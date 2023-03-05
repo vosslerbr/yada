@@ -2,7 +2,7 @@
  * @description populates the activityModifiersOnActivity table. If a modifier is not in the activityModifier table, it will not be added to the join table.
  */
 
-import prisma from "@/lib/prisma";
+import prisma from "../../lib/prisma";
 import { ActivityModifiersOnActivity } from "@prisma/client";
 import axios from "axios";
 
