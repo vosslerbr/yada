@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "../../lib/prisma";
 import { InventoryItem } from "@prisma/client";
 import axios from "axios";
 import _ from "lodash";

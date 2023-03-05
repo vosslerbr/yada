@@ -1,15 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 import dayjs from "dayjs";
 import { Prisma } from "@prisma/client";
-import prisma from "@/lib/prisma";
+import prisma from "../lib/prisma";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "GET") {
-    res.status(405).json({ message: "Method not allowed", success: false });
-
-    return;
-  }
+export default async function genLostSectorSchedule() {
+  console.log("generating lost sector schedule...");
 
   // delete all existing lost sector days
   await prisma.lostSectorDay.deleteMany({});
@@ -119,5 +114,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  res.status(200).json({ message: "created lost sector days", success: true });
+  console.log("lost sector schedule generated");
 }

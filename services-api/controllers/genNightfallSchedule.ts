@@ -1,16 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 import dayjs from "dayjs";
-import prisma from "@/lib/prisma";
+import prisma from "../lib/prisma";
 import { Prisma } from "@prisma/client";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "GET") {
-    res.status(405).json({ message: "Method not allowed", success: false });
-
-    return;
-  }
-
+export default async function genNightfallSchedule() {
   // delete all existing nightfall weeks
   await prisma.nightfallWeek.deleteMany({});
 
@@ -75,6 +68,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       data: nightfallWeek,
     });
   }
-
-  res.status(200).json({ message: "Nightfall schedule generated", success: true });
 }
