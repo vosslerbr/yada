@@ -8,6 +8,11 @@ export default async function updateManifest() {
   try {
     console.time("manifest_population");
 
+    const checkHeap = setInterval(() => {
+      const used = process.memoryUsage().heapUsed / 1024 / 1024;
+      console.log(`The heap is currently using ${Math.round(used * 100) / 100} MB of memory.`);
+    }, 1000);
+
     const manifestRes = await axios.get(process.env.BUNGIE_MANIFEST_BASE_URL!);
 
     const { data: manifestResJson } = manifestRes;
@@ -28,9 +33,12 @@ export default async function updateManifest() {
 
     await startUpdate(manifestResJson);
 
+    // stop the interval
+    clearInterval(checkHeap);
+
     // repopulate lost sector days and nightfall weeks
-    await genLostSectorSchedule();
-    await genNightfallSchedule();
+    // await genLostSectorSchedule();
+    // await genNightfallSchedule();
 
     console.timeEnd("manifest_population");
 
