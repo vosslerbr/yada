@@ -42,6 +42,7 @@ export default function LostSectorSummary() {
         <Shields modifiers={data.activity.modifiers} />
         <Champions modifiers={data.activity.modifiers} />
         <Modifiers modifiers={data.activity.modifiers} />
+        <p className="footnote">Lost sectors change every day at reset.</p>
       </div>
     </div>
   );
