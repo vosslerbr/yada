@@ -16,6 +16,13 @@ nav {
   margin: 0 auto;
 }
 
+#nav-inner h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
 .login-container span,
 .login-container a {
   background: var(--main-med-gray);

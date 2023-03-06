@@ -73,6 +73,8 @@ export default function NightfallSummary() {
                 </div>
               );
             })}
+
+            <p className="footnote">Nightfalls change every Tuesday at reset.</p>
           </div>
         </div>
       ) : (

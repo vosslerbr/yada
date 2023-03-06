@@ -123,9 +123,13 @@ h1 {
   font-size: 0.75rem;
 }
 
-.section-metadata .footnote {
+.section-metadata .footnote,
+.section-card-inner .footnote {
   margin-top: 2rem;
   font-style: italic;
+  font-weight: 300;
+  opacity: 0.5;
+  font-size: 0.75rem;
 }
 
 .section-metadata .footnote a {

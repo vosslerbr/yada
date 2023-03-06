@@ -1,4 +1,3 @@
-import { Home } from "@mui/icons-material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
@@ -18,16 +17,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     router.reload();
   };
 
-  // TODO improve styling
   return (
     <>
       <nav>
         <div id="nav-inner">
-          <div className="login-container">
-            <Link href="/">
-              <Home />
-            </Link>
-          </div>
+          <Link href="/">
+            <h1>Yet Another Destiny App</h1>
+          </Link>
+
           <div className="login-container">
             {loggedIn ? (
               <span onClick={handleLogout}>Log Out</span>
