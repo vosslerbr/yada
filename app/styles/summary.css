@@ -1,0 +1,14 @@
+.summary-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  max-width: 200px;
+}
+
+button.summary-page-over {
+  border: none;
+  background: none;
+  color: white;
+  font-size: 2em;
+}

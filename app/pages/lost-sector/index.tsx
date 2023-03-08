@@ -13,7 +13,7 @@ import { NextPageWithLayout } from "../_app";
 
 const LostSectorDetail: NextPageWithLayout = () => {
   const { data, isLoading }: { data: LostSectorData; isLoading: boolean } = useSWR(
-    "/api/lost-sector",
+    "/api/lost-sector/today",
     fetcher
   );
 

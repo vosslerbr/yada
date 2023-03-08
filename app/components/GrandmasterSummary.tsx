@@ -18,9 +18,6 @@ export default function GrandmasterSummary() {
   // reset is 17:00 UTC on April 11
   const resetTimestamp = dayjs.unix(dayjs("2023-04-11T17:00:00Z").unix()).unix();
 
-  console.log("nowTimestamp: ", nowTimestamp);
-  console.log("resetTimestamp: ", resetTimestamp);
-
   if (nowTimestamp < resetTimestamp) {
     return (
       <div

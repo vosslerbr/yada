@@ -9,7 +9,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const allLostSectorDays = await prisma.lostSectorDay.findMany({
+  const nowTimestamp = dayjs.unix(dayjs().unix()).toISOString();
+
+  const todaysLostSector = await prisma.lostSectorDay.findFirst({
+    where: {
+      startsAt: {
+        lte: nowTimestamp,
+      },
+      endsAt: {
+        gte: nowTimestamp,
+      },
+    },
     include: {
       activity: {
         include: {
@@ -28,12 +38,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     },
   });
 
-  if (!allLostSectorDays.length) {
+  if (!todaysLostSector) {
     res.status(500).json({ message: "Lost sector data not found", success: false });
 
     return;
   }
 
   // return the data
-  res.status(200).json(allLostSectorDays);
+  res.status(200).json(todaysLostSector);
 }
