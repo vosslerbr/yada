@@ -44,3 +44,9 @@ nav {
 .login-container a:hover {
   background: var(--main-light-gray);
 }
+
+@media screen and (max-width: 520px) {
+  #nav-inner h1 {
+    font-size: 1.25rem;
+  }
+}

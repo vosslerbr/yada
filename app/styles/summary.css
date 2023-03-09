@@ -12,3 +12,9 @@ button.summary-page-over {
   color: white;
   font-size: 2em;
 }
+
+@media screen and (max-width: 520px) {
+  .summary-pagination {
+    max-width: 100%;
+  }
+}

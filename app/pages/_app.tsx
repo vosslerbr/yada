@@ -4,6 +4,7 @@ import "@/styles/nav.css";
 import "@/styles/charSelect.css";
 import "@/styles/xurDetail.css";
 import "@/styles/summary.css";
+import "@/styles/footer.css";
 
 import type { AppProps } from "next/app";
 import { Poppins } from "@next/font/google";

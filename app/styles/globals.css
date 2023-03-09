@@ -287,4 +287,18 @@ h1 {
   .items-grid-inner {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  .section-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .out-of-session-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .section-metadata img {
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-right: 0.75rem;
+  }
 }

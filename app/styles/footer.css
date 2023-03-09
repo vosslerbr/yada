@@ -1,0 +1,19 @@
+footer {
+  padding: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+footer p:first-of-type {
+  font-weight: 300;
+  font-size: 0.75rem;
+}
+
+footer p:last-of-type {
+  font-style: italic;
+  font-weight: 300;
+  opacity: 0.5;
+  font-size: 0.75rem;
+}
