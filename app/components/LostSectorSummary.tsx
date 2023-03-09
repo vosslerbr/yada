@@ -90,7 +90,7 @@ export default function LostSectorSummary() {
         <div className="section-card-inner">
           {" "}
           <Tooltip title="View details" placement="left" arrow>
-            <Link href="/lost-sector">
+            <Link href={`/lost-sector/${selectedDay.id}`}>
               <div>
                 <h3>Today&apos;s Lost Sector is</h3>
                 <h2>{selectedDay.name}</h2>
