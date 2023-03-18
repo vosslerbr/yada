@@ -24,6 +24,9 @@ a {
 main {
   max-width: 1200px;
   margin: 2rem auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
 }
 /* TODO My styles (move later) */
 
@@ -35,6 +38,11 @@ main {
   border-radius: 5px;
   margin-bottom: 4rem;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.section-card,
+.out-of-session-card {
+  grid-column: span 6;
 }
 
 .section-card,
@@ -54,8 +62,7 @@ main {
   background-color: rgb(18 24 38 / 34%);
   backdrop-filter: blur(4px);
   padding: 2rem;
-  width: max-content;
-  max-width: 65%;
+  height: 100%;
   border-radius: 5px 0 0 5px;
 }
 
@@ -250,6 +257,11 @@ h1 {
 
   main {
     margin: 1rem auto;
+  }
+
+  .section-card,
+  .out-of-session-card {
+    grid-column: span 12;
   }
 
   .section-card h2 {

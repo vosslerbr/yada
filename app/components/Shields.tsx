@@ -33,8 +33,8 @@ export default function Shields({ modifiers }: LSModifiersProps) {
         <Image
           src={`/${shieldType.toLowerCase()}.png`}
           alt={shieldType}
-          width="48"
-          height="48"
+          width="40"
+          height="40"
           className="shield-image"
           data-pr-tooltip={shieldType}
         />

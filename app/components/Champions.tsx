@@ -41,8 +41,8 @@ export default function Champions({ modifiers }: LSModifiersProps) {
         <Image
           src={`/${champName.toLowerCase()}.png`}
           alt={champName}
-          width="48"
-          height="48"
+          width="40"
+          height="40"
           className="champion-image"
           data-pr-tooltip={champName}
         />

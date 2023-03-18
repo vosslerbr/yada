@@ -30,12 +30,12 @@ export default function Modifiers({ modifiers, showTitle = true }: LSModifiersPr
 
             return (
               <>
-                <Tooltip position="bottom" target=".modifier" position="bottom" />
+                <Tooltip position="bottom" target=".modifier" />
                 <Image
                   src={`https://www.bungie.net${icon}`}
                   alt={name || "modifier"}
-                  width="48"
-                  height="48"
+                  width="40"
+                  height="40"
                   key={`${name}_image`}
                   className="modifier"
                   data-pr-tooltip={`${name}: ${description}`}

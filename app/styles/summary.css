@@ -9,8 +9,6 @@
 button.summary-page-over {
   border: none;
   background: none;
-  color: white;
-  font-size: 2em;
 }
 
 @media screen and (max-width: 520px) {
