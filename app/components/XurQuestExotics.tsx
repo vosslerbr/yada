@@ -1,5 +1,6 @@
-import { Tooltip } from "@mui/material";
 import Image from "next/image";
+import { Tooltip } from "primereact/tooltip";
+import { Fragment } from "react";
 
 export default function XurQuestExotics({ items }: any) {
   return (
@@ -14,16 +15,17 @@ export default function XurQuestExotics({ items }: any) {
             const { icon, name } = item;
 
             return (
-              <Tooltip title={name} key={`${name}_tooltip`} arrow>
+              <Fragment key={`${name}_image`}>
+                <Tooltip position="bottom" target=".reward-image" />
                 <Image
                   src={`https://www.bungie.net${icon}`}
                   alt={name || "Reward"}
                   width="48"
                   height="48"
-                  key={`${name}_image`}
                   className="image-rounded reward-image"
+                  data-pr-tooltip={name}
                 />
-              </Tooltip>
+              </Fragment>
             );
           })}
       </div>

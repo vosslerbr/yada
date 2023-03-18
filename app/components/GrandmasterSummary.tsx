@@ -6,8 +6,8 @@ import Champions from "./Champions";
 import Modifiers from "./Modifiers";
 import CardLoading from "./CardLoading";
 import Link from "next/link";
-import { Tooltip } from "@mui/material";
 import dayjs from "dayjs";
+import { Tooltip } from "primereact/tooltip";
 
 export default function GrandmasterSummary() {
   const { data: nightfallData }: { data: NightfallData } = useSWR("/api/nightfall", fetcher);
@@ -41,14 +41,15 @@ export default function GrandmasterSummary() {
             border: "2px solid #ad8f1e",
           }}>
           <div className="section-card-inner">
-            <Tooltip title="View details" placement="left" arrow>
-              <Link href="/grandmaster">
-                <div>
-                  <h3>This week&apos;s Grandmaster Nightfall is</h3>
-                  <h2>{nightfallData.name}</h2>
-                </div>
-              </Link>
-            </Tooltip>
+            <Tooltip position="bottom" target=".detail-link" />
+
+            <Link href="/grandmaster" className="detail-link" data-pr-tooltip="View details">
+              <div>
+                <h3>This week&apos;s Grandmaster Nightfall is</h3>
+                <h2>{nightfallData.name}</h2>
+              </div>
+            </Link>
+
             <Shields modifiers={nightfallData.grandmaster?.activity.modifiers || []} />
             <Champions modifiers={nightfallData.grandmaster?.activity.modifiers || []} />
             <Modifiers modifiers={nightfallData.grandmaster?.activity.modifiers || []} />

@@ -5,9 +5,9 @@ import XurExoticsDetail from "@/components/XurExoticsDetail";
 import XurLegArmorDetail from "@/components/XurLegArmorDetail";
 import XurLegWeaponsDetail from "@/components/XurLegWeaponsDetail";
 import XurQuestExoticsDetail from "@/components/XurQuestExoticsDetail";
-import { LinearProgress, Tooltip } from "@mui/material";
 import axios from "axios";
 import Head from "next/head";
+import { ProgressBar } from "primereact/progressbar";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../_app";
 
@@ -89,7 +89,7 @@ const XurDetail: NextPageWithLayout = () => {
         </p>
 
         {isLoading && !xur ? (
-          <LinearProgress />
+          <ProgressBar mode="indeterminate" style={{ height: "6px" }}></ProgressBar>
         ) : (
           <>
             <div
@@ -105,12 +105,10 @@ const XurDetail: NextPageWithLayout = () => {
                   minHeight: "350px",
                   minWidth: "40%",
                 }}>
-                <Tooltip title="View details" placement="left" arrow>
-                  <div>
-                    <h3>Leaves Tuesday at </h3>
-                    <h2>{xur?.xur?.name}</h2>
-                  </div>
-                </Tooltip>
+                <div>
+                  <h3>Leaves Tuesday at </h3>
+                  <h2>{xur?.xur?.name}</h2>
+                </div>
               </div>
             </div>
             {user.primaryMembershipId && (

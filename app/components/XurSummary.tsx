@@ -7,8 +7,8 @@ import XurLegendaryArmor from "./XurLegendaryArmor";
 import CardLoading from "./CardLoading";
 import utc from "dayjs/plugin/utc";
 import Link from "next/link";
-import { Tooltip } from "@mui/material";
 import axios from "axios";
+import { Tooltip } from "primereact/tooltip";
 
 dayjs.extend(utc);
 
@@ -100,14 +100,13 @@ export default function XurSummary() {
             backgroundImage: `url(https://www.bungie.net${xurData.xur.keyart})`,
           }}>
           <div className="section-card-inner">
-            <Tooltip title="View details" placement="left" arrow>
-              <Link href="/xur">
-                <div>
-                  <h3>Leaves Tuesday at {resetTime}</h3>
-                  <h2>{xurData.xur.name}</h2>
-                </div>
-              </Link>
-            </Tooltip>
+            <Tooltip position="bottom" target=".detail-link" />
+            <Link href="/xur" className="detail-link" data-pr-tooltip="View details">
+              <div>
+                <h3>Leaves Tuesday at {resetTime}</h3>
+                <h2>{xurData.xur.name}</h2>
+              </div>
+            </Link>
 
             <XurExotics items={xurData.items} />
             <XurQuestExotics items={xurData.items} />

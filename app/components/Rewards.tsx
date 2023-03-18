@@ -1,6 +1,7 @@
-import { Tooltip } from "@mui/material";
 import { Collectible, InventoryItem } from "@prisma/client";
 import Image from "next/image";
+import { Tooltip } from "primereact/tooltip";
+import { Fragment } from "react";
 
 interface LSRewardsProps {
   rewards: (Collectible & {
@@ -17,16 +18,17 @@ export default function Rewards({ rewards }: LSRewardsProps) {
           const { icon, name, hash } = reward.inventoryItem;
 
           return (
-            <Tooltip title={name} key={`${hash}_tooltip`} arrow>
+            <Fragment key={`${name}_image`}>
+              <Tooltip position="bottom" target=".reward-image" />
               <Image
                 src={`https://www.bungie.net${icon}`}
                 alt={name || "Reward"}
                 width="48"
                 height="48"
-                key={`${name}_image`}
                 className="image-rounded reward-image"
+                data-pr-tooltip={name || "Reward"}
               />
-            </Tooltip>
+            </Fragment>
           );
         })}
       </div>

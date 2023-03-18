@@ -5,11 +5,10 @@ import Modifiers from "./Modifiers";
 import Rewards from "./Rewards";
 import Shields from "./Shields";
 import Link from "next/link";
-import { LinearProgress, Tooltip } from "@mui/material";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import { Tooltip } from "primereact/tooltip";
 
 export default function LostSectorSummary() {
   const [data, setData] = useState<LostSectorData[]>([]);
@@ -88,15 +87,16 @@ export default function LostSectorSummary() {
           backgroundImage: `url(https://www.bungie.net${selectedDay.activity.pgcrImage})`,
         }}>
         <div className="section-card-inner">
-          {" "}
-          <Tooltip title="View details" placement="left" arrow>
-            <Link href={`/lost-sector/${selectedDay.id}`}>
-              <div>
-                <h3>Today&apos;s Lost Sector is</h3>
-                <h2>{selectedDay.name}</h2>
-              </div>
-            </Link>
-          </Tooltip>
+          <Tooltip position="bottom" target=".detail-link" />
+          <Link
+            href={`/lost-sector/${selectedDay.id}`}
+            className="detail-link"
+            data-pr-tooltip="View details">
+            <div>
+              <h3>Today&apos;s Lost Sector is</h3>
+              <h2>{selectedDay.name}</h2>
+            </div>
+          </Link>
           <Rewards rewards={selectedDay.rewards} />
           <Shields modifiers={selectedDay.activity.modifiers} />
           <Champions modifiers={selectedDay.activity.modifiers} />
@@ -108,7 +108,7 @@ export default function LostSectorSummary() {
               onClick={() => {
                 handlePageOverClick("prev");
               }}>
-              <ArrowBack fontSize="medium" />
+              <i className="pi pi-arrow-left" />
             </button>
 
             <p>{dayjs(selectedDay.startsAt).format("MM/DD/YYYY")}</p>
@@ -118,12 +118,11 @@ export default function LostSectorSummary() {
               onClick={() => {
                 handlePageOverClick("next");
               }}>
-              <ArrowForward fontSize="medium" />
+              <i className="pi pi-arrow-right" />
             </button>
           </div>
         </div>
       </div>
-      {/* <LinearProgress variant="determinate" value={((selectedIndex + 1) / data.length) * 100} /> */}
     </>
   );
 }

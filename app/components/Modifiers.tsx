@@ -1,6 +1,6 @@
-import { Tooltip } from "@mui/material";
 import { ActivityModifier, ActivityModifiersOnActivity } from "@prisma/client";
 import Image from "next/image";
+import { Tooltip } from "primereact/tooltip";
 
 interface LSModifiersProps {
   modifiers: (ActivityModifiersOnActivity & { activityModifier: ActivityModifier })[];
@@ -29,15 +29,18 @@ export default function Modifiers({ modifiers, showTitle = true }: LSModifiersPr
             const { icon, name, description, hash } = modifier.activityModifier;
 
             return (
-              <Tooltip title={`${name}: ${description}`} key={`${hash}_tooltip`} arrow>
+              <>
+                <Tooltip position="bottom" target=".modifier" position="bottom" />
                 <Image
                   src={`https://www.bungie.net${icon}`}
                   alt={name || "modifier"}
                   width="48"
                   height="48"
                   key={`${name}_image`}
+                  className="modifier"
+                  data-pr-tooltip={`${name}: ${description}`}
                 />
-              </Tooltip>
+              </>
             );
           })}
       </div>

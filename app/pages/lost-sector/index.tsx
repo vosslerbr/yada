@@ -5,8 +5,8 @@ import RewardsDetail from "@/components/RewardsDetail";
 import Shields from "@/components/Shields";
 import { LostSectorData } from "@/global";
 import fetcher from "@/helpers/fetcher";
-import { CircularProgress } from "@mui/material";
 import Head from "next/head";
+import { ProgressBar } from "primereact/progressbar";
 import { ReactElement } from "react";
 import useSWR from "swr";
 import { NextPageWithLayout } from "../_app";
@@ -50,7 +50,7 @@ const LostSectorDetail: NextPageWithLayout = () => {
             <RewardsDetail rewards={data.rewards} />
           </>
         ) : (
-          <CircularProgress />
+          <ProgressBar mode="indeterminate" />
         )}
       </main>
     </>

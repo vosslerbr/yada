@@ -1,6 +1,7 @@
-import { Tooltip } from "@mui/material";
 import { ActivityModifier, ActivityModifiersOnActivity } from "@prisma/client";
 import Image from "next/image";
+import { Tooltip } from "primereact/tooltip";
+import { Fragment } from "react";
 
 interface LSModifiersProps {
   modifiers: (ActivityModifiersOnActivity & { activityModifier: ActivityModifier })[];
@@ -27,15 +28,17 @@ export default function Shields({ modifiers }: LSModifiersProps) {
 
   const shields = shieldTypes.map((shieldType: string) => {
     return (
-      <Tooltip title={shieldType} key={`${shieldType}_tooltip`} arrow>
+      <Fragment key={`${shieldType}_image`}>
+        <Tooltip position="bottom" target=".shield-image" />
         <Image
           src={`/${shieldType.toLowerCase()}.png`}
           alt={shieldType}
           width="48"
           height="48"
-          key={`${shieldType}_image`}
+          className="shield-image"
+          data-pr-tooltip={shieldType}
         />
-      </Tooltip>
+      </Fragment>
     );
   });
 

@@ -3,12 +3,11 @@ import useSWR from "swr";
 import fetcher from "@/helpers/fetcher";
 import Shields from "./Shields";
 import Champions from "./Champions";
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Modifiers from "./Modifiers";
 import CardLoading from "./CardLoading";
 import Link from "next/link";
-import { Tooltip } from "@mui/material";
+import { Tooltip } from "primereact/tooltip";
+import { TabPanel, TabView } from "primereact/tabview";
 
 export default function NightfallSummary() {
   const { data: nightfallData }: { data: NightfallData } = useSWR("/api/nightfall", fetcher);
@@ -22,57 +21,29 @@ export default function NightfallSummary() {
             backgroundImage: `url(https://www.bungie.net${nightfallData.keyart})`,
           }}>
           <div className="section-card-inner">
-            <Tooltip title="View details" placement="left" arrow>
-              <Link href="/nightfall">
-                <div>
-                  <h3>This week&apos;s Nightfall is</h3>
-                  <h2>{nightfallData.name}</h2>
-                </div>
-              </Link>
-            </Tooltip>
+            <Tooltip position="bottom" target=".detail-link" />
+            <Link href="/nightfall" className="detail-link" data-pr-tooltip="View details">
+              <div>
+                <h3>This week&apos;s Nightfall is</h3>
+                <h2>{nightfallData.name}</h2>
+              </div>
+            </Link>
+
             {/* we only need these once, so just grab from master */}
             <Shields modifiers={nightfallData.difficulties[2]?.activity.modifiers || []} />
             <Champions modifiers={nightfallData.difficulties[2]?.activity.modifiers || []} />
-
-            {nightfallData.difficulties.map((difficulty) => {
-              return (
-                <div key={difficulty?.activity.detailedName}>
-                  <Accordion
-                    sx={{
-                      backgroundColor: "transparent",
-                      color: "rgba(255, 255, 255, 0.5)",
-                      boxShadow: "none",
-                    }}>
-                    <AccordionSummary
-                      expandIcon={
-                        <ExpandMoreIcon
-                          sx={{
-                            color: "rgba(255, 255, 255, 0.5)",
-                          }}
-                        />
-                      }
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
-                      sx={{
-                        border: "none",
-                        paddingLeft: "0rem",
-                      }}>
-                      <Typography>{difficulty?.activity.detailedName} Modifiers</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails
-                      sx={{
-                        paddingLeft: "0rem",
-                        paddingRight: "0rem",
-                      }}>
-                      <Modifiers
-                        modifiers={difficulty?.activity.modifiers || []}
-                        showTitle={false}
-                      />
-                    </AccordionDetails>
-                  </Accordion>
-                </div>
-              );
-            })}
+            {/* TODO improve styling */}
+            <TabView>
+              {nightfallData.difficulties.map((difficulty) => {
+                return (
+                  <TabPanel
+                    header={`${difficulty?.activity.detailedName} Modifiers`}
+                    key={difficulty?.activity.detailedName}>
+                    <Modifiers modifiers={difficulty?.activity.modifiers || []} showTitle={false} />
+                  </TabPanel>
+                );
+              })}
+            </TabView>
 
             <p className="footnote">Nightfalls change every Tuesday at reset.</p>
           </div>

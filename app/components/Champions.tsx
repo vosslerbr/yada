@@ -1,6 +1,7 @@
-import { Tooltip } from "@mui/material";
 import { ActivityModifier, ActivityModifiersOnActivity } from "@prisma/client";
 import Image from "next/image";
+import { Tooltip } from "primereact/tooltip";
+import { Fragment } from "react";
 
 interface LSModifiersProps {
   modifiers: (ActivityModifiersOnActivity & { activityModifier: ActivityModifier })[];
@@ -35,15 +36,17 @@ export default function Champions({ modifiers }: LSModifiersProps) {
     const champName = championNameMap[championType];
 
     return (
-      <Tooltip title={champName} key={`${champName}_tooltip`} arrow>
+      <Fragment key={`${champName}_image`}>
+        <Tooltip position="bottom" target=".champion-image" />
         <Image
           src={`/${champName.toLowerCase()}.png`}
           alt={champName}
           width="48"
           height="48"
-          key={`${champName}_image`}
+          className="champion-image"
+          data-pr-tooltip={champName}
         />
-      </Tooltip>
+      </Fragment>
     );
   });
 

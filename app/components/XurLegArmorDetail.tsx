@@ -2,8 +2,10 @@ import Image from "next/image";
 import classTypeMap from "@/helpers/classTypeMap";
 import { useContext, useEffect, useState } from "react";
 import { UserContext, UserContextType } from "./Store";
-import { LinearProgress, Tooltip } from "@mui/material";
+
 import axios from "axios";
+import { ProgressBar } from "primereact/progressbar";
+import { Tooltip } from "primereact/tooltip";
 
 interface Props {
   items: {
@@ -130,31 +132,41 @@ export default function XurLegArmorDetail({ items }: Props) {
                 </div>
 
                 {isLoading ? (
-                  <LinearProgress
-                    sx={{
-                      marginTop: "1rem",
-                    }}
-                  />
+                  <ProgressBar mode="indeterminate" style={{ height: "6px" }}></ProgressBar>
                 ) : user?.primaryMembershipId ? (
                   <div className="item-unlock-detail">
                     {isAcquired ? (
-                      <Tooltip title="You've found this item before" arrow>
-                        <span className="unlocked">Collections</span>
-                      </Tooltip>
+                      <>
+                        <Tooltip position="bottom" target="unlocked" />
+                        <span className="unlocked" data-pr-tooltip="You've found this item before">
+                          Collections
+                        </span>
+                      </>
                     ) : (
-                      <Tooltip title="You haven't found this item yet" arrow>
-                        <span className="locked">Collections</span>
-                      </Tooltip>
+                      <>
+                        <Tooltip position="bottom" target="locked" />
+                        <span className="locked" data-pr-tooltip="You haven't found this item yet">
+                          Collections
+                        </span>
+                      </>
                     )}
 
                     {userOwned?.length > 0 ? (
-                      <Tooltip title={`You have at least 1 of these in your inventory`} arrow>
-                        <span className="unlocked">Inventory</span>
-                      </Tooltip>
+                      <>
+                        <Tooltip position="bottom" target="unlocked" />
+                        <span
+                          className="unlocked"
+                          data-pr-tooltip={`You have ${userOwned.length} of these in your inventory`}>
+                          Inventory
+                        </span>
+                      </>
                     ) : (
-                      <Tooltip title="You don't own this item" arrow>
-                        <span className="locked">Inventory</span>
-                      </Tooltip>
+                      <>
+                        <Tooltip position="bottom" target="locked" />
+                        <span className="locked" data-pr-tooltip="You don't own this item">
+                          Inventory
+                        </span>
+                      </>
                     )}
                   </div>
                 ) : (
