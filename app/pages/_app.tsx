@@ -1,6 +1,8 @@
 import "@/styles/variables.css";
 import "@/styles/globals.css";
 
+import PrimeReact from "primereact/api";
+
 import "primereact/resources/themes/viva-dark/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
@@ -16,6 +18,8 @@ import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next";
 import Store from "@/components/Store";
 import { Analytics } from "@vercel/analytics/react";
+
+PrimeReact.ripple = true;
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   // eslint-disable-next-line

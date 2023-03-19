@@ -2,7 +2,7 @@ nav {
   padding: 1rem 0;
   position: sticky;
   top: 0px;
-  background: rgba(16, 19, 27, 0.75);
+  background: var(--surface-ground);
   z-index: 1;
   backdrop-filter: blur(4px);
 }
@@ -23,26 +23,8 @@ nav {
   margin: 0;
 }
 
-.login-container span,
-.login-container a {
-  background: var(--main-med-gray);
-  box-shadow: var(--main-box-shadow);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: 0.15s ease-in-out;
-}
-
 .login-container svg {
   margin-bottom: -6px;
-}
-
-.login-container span:hover,
-.login-container a:hover {
-  background: var(--main-light-gray);
 }
 
 @media screen and (max-width: 520px) {

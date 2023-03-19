@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { UserContext, UserContextType } from "./Store";
+import { Button } from "primereact/button";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { user } = useContext(UserContext) as UserContextType;
@@ -27,13 +28,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           <div className="login-container">
             {loggedIn ? (
-              <span onClick={handleLogout}>Log Out</span>
+              <Button onClick={handleLogout} severity="secondary">
+                Log Out
+              </Button>
             ) : (
               <a
                 href={`https://www.bungie.net/en/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_BUNGIE_APP_CLIENT_ID}&response_type=code`}
                 // target="_blank"
                 rel="noreferrer">
-                Log In
+                <Button>Log In</Button>
               </a>
             )}
           </div>

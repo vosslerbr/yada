@@ -10,6 +10,7 @@ import Head from "next/head";
 import { ProgressBar } from "primereact/progressbar";
 import { ReactElement, useContext, useEffect, useState } from "react";
 import { NextPageWithLayout } from "../_app";
+import { Message } from "primereact/message";
 
 const XurDetail: NextPageWithLayout = () => {
   const { user } = useContext(UserContext) as UserContextType;
@@ -84,9 +85,13 @@ const XurDetail: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <p className="dev-warning">
-          <span>Heads up!</span> This page is under development and may not work as expected.
-        </p>
+        <Message
+          severity="warn"
+          text="Heads up! This page is under development and may not work as expected."
+          style={{
+            gridColumn: "1 / -1",
+          }}
+        />
 
         {isLoading && !xur ? (
           <ProgressBar mode="indeterminate" style={{ height: "6px" }}></ProgressBar>
