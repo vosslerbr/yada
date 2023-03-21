@@ -1,6 +1,7 @@
 import { ActivityModifier, ActivityModifiersOnActivity } from "@prisma/client";
 import Image from "next/image";
 import { Tooltip } from "primereact/tooltip";
+import { Fragment } from "react";
 
 interface LSModifiersProps {
   modifiers: (ActivityModifiersOnActivity & { activityModifier: ActivityModifier })[];
@@ -29,18 +30,17 @@ export default function Modifiers({ modifiers, showTitle = true }: LSModifiersPr
             const { icon, name, description, hash } = modifier.activityModifier;
 
             return (
-              <>
+              <Fragment key={`${name}_image`}>
                 <Tooltip position="bottom" target=".modifier" />
                 <Image
                   src={`https://www.bungie.net${icon}`}
                   alt={name || "modifier"}
                   width="40"
                   height="40"
-                  key={`${name}_image`}
                   className="modifier"
                   data-pr-tooltip={`${name}: ${description}`}
                 />
-              </>
+              </Fragment>
             );
           })}
       </div>

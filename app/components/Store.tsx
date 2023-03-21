@@ -124,5 +124,7 @@ export default function Store({ children }: Props) {
     getToken();
   }, [router.query.code]);
 
+
+
   return <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>;
 }

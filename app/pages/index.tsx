@@ -8,8 +8,6 @@ import { ReactElement } from "react";
 import Layout from "@/components/Layout";
 
 const Home: NextPageWithLayout = () => {
-  // when page loads, we need to check for a 'code' query param since this is our callback URL
-
   return (
     <>
       <Head>
