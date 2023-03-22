@@ -73,6 +73,16 @@ export default function LostSectorSummary() {
 
   useEffect(() => {
     fetchLostSectors();
+
+    const getActivityTest = async () => {
+      const { getActivityDef } = await import("@d2api/manifest-web");
+
+      const activityTest = getActivityDef(1648125538);
+
+      console.log(activityTest);
+    };
+
+    getActivityTest();
   }, []);
 
   if (!data.length || !selectedDay) {

@@ -1,6 +1,7 @@
 import React, { useState, createContext, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { ProgressBar } from "primereact/progressbar";
 
 export type UserContextType = {
   user: {
@@ -21,6 +22,7 @@ type Props = {
 
 export default function Store({ children }: Props) {
   const [user, setUser] = useState<any>({});
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
 
@@ -124,7 +126,42 @@ export default function Store({ children }: Props) {
     getToken();
   }, [router.query.code]);
 
+  useEffect(() => {
+    const getManifest = async () => {
+      console.time("load defs");
 
+      const { setApiKey, verbose, loadDefs, includeTables } = await import("@d2api/manifest-web");
 
-  return <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>;
+      setApiKey("995db4bb196a42fb8b7426f61f6c8e6e");
+      verbose();
+      includeTables(["DamageType", "InventoryItem", "Activity"]);
+
+      await loadDefs();
+
+      setLoading(false);
+
+      console.timeEnd("load defs");
+    };
+
+    getManifest();
+  }, []);
+
+  const loadingScreen = (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
+      <h2>Loading manifest...</h2>
+      <ProgressBar mode="indeterminate" style={{ height: "6px" }} />
+    </div>
+  );
+
+  return (
+    <UserContext.Provider value={{ user }}>
+      {loading ? loadingScreen : children}
+    </UserContext.Provider>
+  );
 }
