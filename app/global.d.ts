@@ -13,10 +13,7 @@ export interface ClassTypeMap {
 }
 
 export interface LostSectorData extends LostSectorDay {
-  activity: {
-    modifiers: Array<ActivityModifiersOnActivity & { activityModifier: ActivityModifier }>;
-  } & Activity;
-  rewards: Array<Collectible & { inventoryItem: InventoryItem }>;
+  activity: Activity;
 }
 
 export interface NightfallData {

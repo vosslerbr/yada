@@ -7,7 +7,7 @@ import Modifiers from "./Modifiers";
 import CardLoading from "./CardLoading";
 import Link from "next/link";
 import { Tooltip } from "primereact/tooltip";
-import { TabPanel, TabView } from "primereact/tabview";
+import { Panel } from "primereact/panel";
 
 export default function NightfallSummary() {
   const { data: nightfallData }: { data: NightfallData } = useSWR("/api/nightfall", fetcher);
@@ -33,17 +33,19 @@ export default function NightfallSummary() {
             <Shields modifiers={nightfallData.difficulties[2]?.activity.modifiers || []} />
             <Champions modifiers={nightfallData.difficulties[2]?.activity.modifiers || []} />
             {/* TODO improve styling */}
-            <TabView>
-              {nightfallData.difficulties.map((difficulty) => {
-                return (
-                  <TabPanel
-                    header={`${difficulty?.activity.detailedName} Modifiers`}
-                    key={difficulty?.activity.detailedName}>
-                    <Modifiers modifiers={difficulty?.activity.modifiers || []} showTitle={false} />
-                  </TabPanel>
-                );
-              })}
-            </TabView>
+
+            {nightfallData.difficulties.map((difficulty) => {
+              return (
+                <Panel
+                  header={`${difficulty?.activity.detailedName?.replace(
+                    "Nightfall: ",
+                    ""
+                  )} Modifiers`}
+                  key={difficulty?.activity.detailedName}>
+                  <Modifiers modifiers={difficulty?.activity.modifiers || []} showTitle={false} />
+                </Panel>
+              );
+            })}
 
             <p className="footnote">Nightfalls change every Tuesday at reset.</p>
           </div>

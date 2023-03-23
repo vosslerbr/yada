@@ -9,24 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const allLostSectorDays = await prisma.lostSectorDay.findMany({
-    include: {
-      activity: {
-        include: {
-          modifiers: {
-            include: {
-              activityModifier: true,
-            },
-          },
-        },
-      },
-      rewards: {
-        include: {
-          inventoryItem: true,
-        },
-      },
-    },
-  });
+  const allLostSectorDays = await prisma.lostSectorDay.findMany();
 
   if (!allLostSectorDays.length) {
     res.status(500).json({ message: "Lost sector data not found", success: false });

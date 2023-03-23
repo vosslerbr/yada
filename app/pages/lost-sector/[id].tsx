@@ -8,7 +8,7 @@ import fetcher from "@/helpers/fetcher";
 import dayjs from "dayjs";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { ProgressBar } from "primereact/progressbar";
+import { ProgressSpinner } from "primereact/progressspinner";
 import { ReactElement } from "react";
 import useSWR from "swr";
 import { NextPageWithLayout } from "../_app";
@@ -56,7 +56,15 @@ const LostSectorDetail: NextPageWithLayout = () => {
             <RewardsDetail rewards={data.rewards} />
           </>
         ) : (
-          <ProgressBar mode="indeterminate" />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}>
+            <ProgressSpinner />
+          </div>
         )}
       </main>
     </>

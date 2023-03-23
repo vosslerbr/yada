@@ -9,42 +9,12 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Tooltip } from "primereact/tooltip";
+import { LostSectorDay } from "@prisma/client";
 
 export default function LostSectorSummary() {
-  const [data, setData] = useState<LostSectorData[]>([]);
-  const [selectedDay, setSelectedDay] = useState<LostSectorData | null>(null);
+  const [data, setData] = useState<any[]>([]);
+  const [selectedDay, setSelectedDay] = useState<any | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [seasonProgress, setSeasonProgress] = useState(0);
-
-  const fetchLostSectors = async () => {
-    const { data: lostSectors }: { data: LostSectorData[] } = await axios.get("/api/lost-sector");
-
-    setData(lostSectors);
-
-    // find the index of the current day
-    const todaysLostSector = lostSectors.find((lostSectorDay) => {
-      const now = dayjs();
-
-      return (
-        dayjs(lostSectorDay.startsAt).isBefore(now) && dayjs(lostSectorDay.endsAt).isAfter(now)
-      );
-    });
-
-    if (todaysLostSector) {
-      setSelectedDay(todaysLostSector);
-
-      // find the index of the current day
-      const todaysLostSectorIndex = lostSectors.findIndex((lostSectorDay) => {
-        const now = dayjs();
-
-        return (
-          dayjs(lostSectorDay.startsAt).isBefore(now) && dayjs(lostSectorDay.endsAt).isAfter(now)
-        );
-      });
-
-      setSelectedIndex(todaysLostSectorIndex);
-    }
-  };
 
   const handlePageOverClick = (direction: string) => {
     if (direction === "next") {
@@ -72,17 +42,55 @@ export default function LostSectorSummary() {
   }, [selectedIndex]);
 
   useEffect(() => {
-    fetchLostSectors();
+    const fetchLostSectors = async () => {
+      const { getActivityDef, getActivityModifierDef } = await import("@d2api/manifest-web");
 
-    const getActivityTest = async () => {
-      const { getActivityDef } = await import("@d2api/manifest-web");
+      const { data: lostSectors }: { data: LostSectorDay[] } = await axios.get("/api/lost-sector");
 
-      const activityTest = getActivityDef(1648125538);
+      const test = lostSectors.map((lostSector) => {
+        const activity = getActivityDef(lostSector.activityHash);
+        const modifiers =
+          activity?.modifiers?.map((modifier) => {
+            return getActivityModifierDef(modifier.activityModifierHash);
+          }) || [];
 
-      console.log(activityTest);
+        return {
+          ...lostSector,
+          activity,
+          modifiers,
+        };
+      });
+
+      console.log(test);
+
+      setData(lostSectors);
+
+      // find the index of the current day
+      const todaysLostSector = lostSectors.find((lostSectorDay) => {
+        const now = dayjs();
+
+        return (
+          dayjs(lostSectorDay.startsAt).isBefore(now) && dayjs(lostSectorDay.endsAt).isAfter(now)
+        );
+      });
+
+      if (todaysLostSector) {
+        setSelectedDay(todaysLostSector);
+
+        // find the index of the current day
+        const todaysLostSectorIndex = lostSectors.findIndex((lostSectorDay) => {
+          const now = dayjs();
+
+          return (
+            dayjs(lostSectorDay.startsAt).isBefore(now) && dayjs(lostSectorDay.endsAt).isAfter(now)
+          );
+        });
+
+        setSelectedIndex(todaysLostSectorIndex);
+      }
     };
 
-    getActivityTest();
+    fetchLostSectors();
   }, []);
 
   if (!data.length || !selectedDay) {
