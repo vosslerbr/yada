@@ -1,7 +1,7 @@
 import React, { useState, createContext, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { ProgressBar } from "primereact/progressbar";
+import { ProgressSpinner } from "primereact/progressspinner";
 
 export type UserContextType = {
   user: {
@@ -146,6 +146,7 @@ export default function Store({ children }: Props) {
     getManifest();
   }, []);
 
+  // TODO - make this a component and improve if needed
   const loadingScreen = (
     <div
       style={{
@@ -153,9 +154,10 @@ export default function Store({ children }: Props) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        height: "100vh",
       }}>
       <h2>Loading manifest...</h2>
-      <ProgressBar mode="indeterminate" style={{ height: "6px" }} />
+      <ProgressSpinner />
     </div>
   );
 

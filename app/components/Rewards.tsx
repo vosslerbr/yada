@@ -1,21 +1,19 @@
-import { Collectible, InventoryItem } from "@prisma/client";
 import Image from "next/image";
 import { Tooltip } from "primereact/tooltip";
 import { Fragment } from "react";
+import { DestinyInventoryItemDefinition } from "bungie-api-ts/destiny2";
 
-interface LSRewardsProps {
-  rewards: (Collectible & {
-    inventoryItem: InventoryItem;
-  })[];
+interface RewardsProps {
+  rewards: (DestinyInventoryItemDefinition | undefined)[];
 }
 
-export default function Rewards({ rewards }: LSRewardsProps) {
+export default function Rewards({ rewards }: RewardsProps) {
   return (
     <div className="rewards-container section-metadata">
       <h4>Rewards</h4>
       <div>
         {rewards.map((reward) => {
-          const { icon, name, hash } = reward.inventoryItem;
+          const { icon, name } = reward?.displayProperties || {};
 
           return (
             <Fragment key={`${name}_image`}>

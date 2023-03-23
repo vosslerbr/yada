@@ -1,35 +1,31 @@
-import { ActivityModifier, ActivityModifiersOnActivity } from "@prisma/client";
 import Image from "next/image";
 import { Tooltip } from "primereact/tooltip";
 import { Fragment } from "react";
+import { DestinyActivityModifierDefinition } from "bungie-api-ts/destiny2";
 
-interface LSModifiersProps {
-  modifiers: (ActivityModifiersOnActivity & { activityModifier: ActivityModifier })[];
+interface ModifiersProps {
+  modifiers: (DestinyActivityModifierDefinition | undefined)[];
   showTitle?: boolean;
 }
 
-export default function Modifiers({ modifiers, showTitle = true }: LSModifiersProps) {
+export default function Modifiers({ modifiers, showTitle = true }: ModifiersProps) {
   return (
     <div className="modifiers-container section-metadata">
       {showTitle && <h4>Modifiers</h4>}
 
       <div>
-        {modifiers
-          .filter((modifier) => {
-            // Filter out the "Shielded Foes" and "Champion Foes" modifiers as well as any modifiers without an icon
-            const { name, icon } = modifier.activityModifier;
+        {modifiers.reduce((acc: JSX.Element[], modifier) => {
+          const { name, icon } = modifier?.displayProperties || {};
 
-            const notShieldedFoes = name !== "Shielded Foes";
-            const notChampionFoes = name !== "Champion Foes";
-            const notVanguardRank = name !== "Increased Vanguard Rank";
-            const notDoubleDrops = name !== "Double Nightfall Drops";
+          const notShieldedFoes = name !== "Shielded Foes";
+          const notChampionFoes = name !== "Champion Foes";
+          const notVanguardRank = name !== "Increased Vanguard Rank";
+          const notDoubleDrops = name !== "Double Nightfall Drops";
 
-            return icon && notShieldedFoes && notChampionFoes && notVanguardRank && notDoubleDrops;
-          })
-          .map((modifier) => {
-            const { icon, name, description, hash } = modifier.activityModifier;
+          if (icon && notShieldedFoes && notChampionFoes && notVanguardRank && notDoubleDrops) {
+            const { icon, name, description } = modifier?.displayProperties || {};
 
-            return (
+            acc.push(
               <Fragment key={`${name}_image`}>
                 <Tooltip position="bottom" target=".modifier" />
                 <Image
@@ -42,7 +38,10 @@ export default function Modifiers({ modifiers, showTitle = true }: LSModifiersPr
                 />
               </Fragment>
             );
-          })}
+          }
+
+          return acc;
+        }, [])}
       </div>
     </div>
   );

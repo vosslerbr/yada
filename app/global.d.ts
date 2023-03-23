@@ -8,12 +8,20 @@ import {
   NightfallWeek,
 } from "@prisma/client";
 
+import {
+  DestinyActivityDefinition,
+  DestinyActivityModifierDefinition,
+  DestinyInventoryItemDefinition,
+} from "bungie-api-ts/destiny2";
+
 export interface ClassTypeMap {
   [key: number]: string;
 }
 
 export interface LostSectorData extends LostSectorDay {
-  activity: Activity;
+  activity: DestinyActivityDefinition | undefined;
+  modifiers: (DestinyActivityModifierDefinition | undefined)[];
+  rewards: (DestinyInventoryItemDefinition | undefined)[];
 }
 
 export interface NightfallData {

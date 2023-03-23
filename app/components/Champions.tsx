@@ -1,15 +1,15 @@
-import { ActivityModifier, ActivityModifiersOnActivity } from "@prisma/client";
 import Image from "next/image";
 import { Tooltip } from "primereact/tooltip";
 import { Fragment } from "react";
+import { DestinyActivityModifierDefinition } from "bungie-api-ts/destiny2";
 
-interface LSModifiersProps {
-  modifiers: (ActivityModifiersOnActivity & { activityModifier: ActivityModifier })[];
+interface ChampionProps {
+  modifiers: (DestinyActivityModifierDefinition | undefined)[];
 }
 
-export default function Champions({ modifiers }: LSModifiersProps) {
-  const championsObject = modifiers.find((modifier: any) => {
-    return modifier.activityModifier.name === "Champion Foes";
+export default function Champions({ modifiers }: ChampionProps) {
+  const championsObject = modifiers.find((modifier) => {
+    return modifier?.displayProperties?.name === "Champion Foes";
   });
 
   if (!championsObject) {
@@ -22,7 +22,7 @@ export default function Champions({ modifiers }: LSModifiersProps) {
     "Shield-Piercing": "Barrier",
   };
 
-  const { description } = championsObject.activityModifier;
+  const { description } = championsObject.displayProperties;
 
   let regex = /\[([^\]]+)\]/g;
   let match: RegExpExecArray | null;

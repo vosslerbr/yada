@@ -5,6 +5,7 @@ import prisma from "../lib/prisma";
 
 export default async function genLostSectorSchedule() {
   console.log("generating lost sector schedule...");
+  console.time("lost sector schedule generated");
 
   // delete all existing lost sector days
   await prisma.lostSectorDay.deleteMany({});
@@ -15,35 +16,6 @@ export default async function genLostSectorSchedule() {
     "Exotic Leg Armor",
     "Exotic Gauntlets",
   ];
-
-  const armorCollectibles: {
-    [key: string]: { hash: number }[];
-  } = {
-    "Exotic Helmet": [],
-    "Exotic Leg Armor": [],
-    "Exotic Gauntlets": [],
-    "Exotic Chest Armor": [],
-  };
-
-  const lostSectorSourceHash = 2203185162;
-
-  // find any collectibles that drop from Lost Sectors and are of a specific armor type
-  for (const armor of armorOrder) {
-    const lostSectorCollectibles = await prisma.collectible.findMany({
-      where: {
-        sourceHash: lostSectorSourceHash,
-        inventoryItem: {
-          is: {
-            itemTypeAndTierDisplayName: armor,
-          },
-        },
-      },
-    });
-
-    armorCollectibles[armor] = lostSectorCollectibles.map((collectible) => {
-      return { hash: collectible.hash };
-    });
-  }
 
   const lostSectorOrder = fs.readFileSync(process.cwd() + "/json/LostSectorOrderS20.json", "utf8");
 
@@ -91,28 +63,20 @@ export default async function genLostSectorSchedule() {
     }
 
     const lostSectorDay: Prisma.LostSectorDayCreateInput = {
+      activityHash: lostSector.hash,
       startsAt: reset,
       endsAt: nextReset,
       name: lostSector.name,
-      activity: {
-        connect: {
-          hash: lostSector.hash,
-        },
-      },
-      rewards: {
-        connect: armorCollectibles[rewardName],
-      },
+      rewardType: rewardName,
     };
 
     lostSectorDays.push(lostSectorDay);
   }
 
-  // create each day one at a time
-  for (const lostSectorDay of lostSectorDays) {
-    await prisma.lostSectorDay.create({
-      data: lostSectorDay,
-    });
-  }
+  await prisma.lostSectorDay.createMany({
+    data: lostSectorDays,
+  });
 
+  console.timeEnd("lost sector schedule generated");
   console.log("lost sector schedule generated");
 }
