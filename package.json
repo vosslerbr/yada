@@ -1,22 +1,43 @@
 {
-  "name": "yada",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "destiny-app",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "app": "cd app && npm run dev",
-    "api": "cd services-api && npm run dev",
-    "dev": "concurrently \"npm run app\" \"npm run api\""
+    "dev": "prisma generate && next dev",
+    "build": "next build",
+    "vercel-build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "prisma": {
+    "schema": "../shared/prisma/schema.prisma"
+  },
   "dependencies": {
+    "@d2api/manifest-web": "^2.1.1",
     "@prisma/client": "^4.11.0",
-    "concurrently": "^7.6.0",
-    "nodemon": "^2.0.21"
+    "@types/node": "18.11.19",
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
+    "@vercel/analytics": "^0.1.10",
+    "axios": "^1.3.4",
+    "dayjs": "^1.11.7",
+    "eslint": "8.33.0",
+    "eslint-config-next": "13.1.6",
+    "lodash": "^4.17.21",
+    "next": "13.1.6",
+    "next-auth": "^4.19.2",
+    "primeicons": "^6.0.1",
+    "primereact": "^9.2.1",
+    "qp": "^0.4.14",
+    "qs": "^6.11.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "swr": "^2.0.3",
+    "typescript": "4.9.5"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.191",
+    "@types/qs": "^6.9.7",
     "prisma": "^4.11.0"
   }
 }

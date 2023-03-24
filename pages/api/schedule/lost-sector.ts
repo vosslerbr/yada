@@ -1,9 +1,15 @@
-import fs from "fs";
 import dayjs from "dayjs";
 import { Prisma } from "@prisma/client";
-import prisma from "../lib/prisma";
+import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "@/lib/prisma";
+import lostSectorOrder from "@/helpers/lostSectorOrderS20";
 
-export default async function genLostSectorSchedule() {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // only accept a post request
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method Not Allowed" });
+  }
+
   console.log("generating lost sector schedule...");
   console.time("lost sector schedule generated");
 
@@ -16,10 +22,6 @@ export default async function genLostSectorSchedule() {
     "Exotic Leg Armor",
     "Exotic Gauntlets",
   ];
-
-  const lostSectorOrder = fs.readFileSync(process.cwd() + "/json/LostSectorOrderS20.json", "utf8");
-
-  const lostSectorOrderJson = JSON.parse(lostSectorOrder);
 
   const startDate = dayjs("02/28/2023").startOf("day").add(11, "hour"); // The first day we want to start the schedule
   const lastDayOfSeason = dayjs("05/22/2023 11:00:00", "MM/DD/YYYY HH:mm:ss");
@@ -46,7 +48,7 @@ export default async function genLostSectorSchedule() {
 
     // we only have 4 armor types so  we need to loop through them repeatedly
     const rewardName = armorOrder[armorIndex];
-    const lostSector: { name: string; hash: number } = lostSectorOrderJson[lostSectorIndex];
+    const lostSector = lostSectorOrder[lostSectorIndex];
 
     // reset armor loop if needed
     if (armorIndex === armorOrder.length - 1) {
@@ -56,7 +58,7 @@ export default async function genLostSectorSchedule() {
     }
 
     // reset lost sector loop if needed
-    if (lostSectorIndex === lostSectorOrderJson.length - 1) {
+    if (lostSectorIndex === lostSectorOrder.length - 1) {
       lostSectorIndex = 0;
     } else {
       lostSectorIndex++;
@@ -79,4 +81,6 @@ export default async function genLostSectorSchedule() {
 
   console.timeEnd("lost sector schedule generated");
   console.log("lost sector schedule generated");
+
+  res.status(200).json({ success: true, message: "Created lost sector schedule" });
 }

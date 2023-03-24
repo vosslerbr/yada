@@ -5,7 +5,3 @@ View the current Lost Sector and Nightfall rotations and Xur's inventory in Dest
 ## /app
 
 Contains the main YADA application. Written with NextJS and Prisma.
-
-## /services-api
-
-Contains an Express server used for populating the MySQL database with Manifest, Lost Sector, and Nightfall data.

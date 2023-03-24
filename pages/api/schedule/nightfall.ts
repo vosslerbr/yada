@@ -1,15 +1,18 @@
 import fs from "fs";
 import dayjs from "dayjs";
-import prisma from "../lib/prisma";
+import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from "next";
+import nightfallOrder from "@/helpers/nightfallOrderS20";
 
-export default async function genNightfallSchedule() {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // only accept a post request
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method Not Allowed" });
+  }
+
   // delete all existing nightfall weeks
   await prisma.nightfallWeek.deleteMany({});
-
-  const nightfallOrder = fs.readFileSync(process.cwd() + "/json/NightFallOrderS20.json", "utf8");
-
-  const nightfallOrderJson = JSON.parse(nightfallOrder);
 
   const startDate = dayjs("02/28/2023").startOf("day").add(11, "hour"); // The first day we want to start the schedule
 
@@ -34,9 +37,9 @@ export default async function genNightfallSchedule() {
     // ends at next weekly reset
     const nextReset = dayjs.unix(firstResetTimestamp + 604800).toISOString();
 
-    const nightfall = nightfallOrderJson[nightfallIndex];
+    const nightfall = nightfallOrder[nightfallIndex];
 
-    if (nightfallIndex === nightfallOrderJson.length - 1) {
+    if (nightfallIndex === nightfallOrder.length - 1) {
       nightfallIndex = 0;
     } else {
       nightfallIndex++;
