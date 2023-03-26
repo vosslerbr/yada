@@ -25,25 +25,11 @@ export interface LostSectorData extends LostSectorDay {
 }
 
 export interface NightfallData {
-  name: string | null | undefined;
-  keyart: string | null | undefined;
-  difficulties: (
-    | (NightfallWeek & {
-        activity: Activity & {
-          modifiers: (ActivityModifiersOnActivity & {
-            activityModifier: ActivityModifier;
-          })[];
-        };
-      })
-    | undefined
-  )[];
-  grandmaster:
-    | (NightfallWeek & {
-        activity: Activity & {
-          modifiers: (ActivityModifiersOnActivity & {
-            activityModifier: ActivityModifier;
-          })[];
-        };
-      })
-    | undefined;
+  difficulties: NightfallWeek[];
+  grandmaster: NightfallWeek;
+}
+
+export interface NightfallWeekData extends NightfallWeek {
+  activity: DestinyActivityDefinition | undefined;
+  modifiers: (DestinyActivityModifierDefinition | undefined)[];
 }

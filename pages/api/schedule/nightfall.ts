@@ -1,4 +1,3 @@
-import fs from "fs";
 import dayjs from "dayjs";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
@@ -10,6 +9,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
+
+  console.log("generating nightfall schedule...");
+  console.time("nightfall schedule generated");
 
   // delete all existing nightfall weeks
   await prisma.nightfallWeek.deleteMany({});
@@ -45,7 +47,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       nightfallIndex++;
     }
 
-    const difficulties = Object.keys(nightfall.difficulties);
+    const difficulties = Object.keys(nightfall.difficulties) as [
+      "hero",
+      "legend",
+      "master",
+      "grandmaster"
+    ];
 
     // create a nightfall week for each difficulty
     difficulties.forEach((difficulty) => {
@@ -54,11 +61,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         endsAt: nextReset,
         name: nightfall.name,
         difficulty,
-        activity: {
-          connect: {
-            hash: nightfall.difficulties[difficulty],
-          },
-        },
+        activityHash: nightfall.difficulties[difficulty],
       };
 
       nightfallWeeks.push(nightfallWeek);
@@ -66,9 +69,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // create all the nightfall weeks
-  for (const nightfallWeek of nightfallWeeks) {
-    await prisma.nightfallWeek.create({
-      data: nightfallWeek,
-    });
-  }
+  await prisma.nightfallWeek.createMany({
+    data: nightfallWeeks,
+  });
+
+  console.timeEnd("nightfall schedule generated");
+  console.log("nightfall schedule generated");
+
+  res.status(200).json({ success: true, message: "Created nightfall schedule" });
 }

@@ -9,9 +9,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "prisma": {
-    "schema": "../shared/prisma/schema.prisma"
-  },
   "dependencies": {
     "@d2api/manifest-web": "^2.1.1",
     "@prisma/client": "^4.11.0",

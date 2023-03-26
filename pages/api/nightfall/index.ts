@@ -20,17 +20,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         gte: nowTimestamp,
       },
     },
-    include: {
-      activity: {
-        include: {
-          modifiers: {
-            include: {
-              activityModifier: true,
-            },
-          },
-        },
-      },
-    },
   });
 
   if (!nightfalls.length) {
@@ -49,12 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     (nightfall) => nightfall.difficulty === "grandmaster"
   );
 
-  const keyart = heroNightfall?.activity?.pgcrImage;
-  const name = heroNightfall?.activity?.description; // idk why but this is the name
-
   const data = {
-    name,
-    keyart,
     difficulties: [heroNightfall, legendNightfall, masterNightfall],
     grandmaster: grandmasterNightfall,
   };
