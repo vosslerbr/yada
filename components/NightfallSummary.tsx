@@ -35,8 +35,6 @@ export default function NightfallSummary() {
         };
       });
 
-      console.log(nightfalls);
-
       setNightfalls(nightfalls);
     };
 

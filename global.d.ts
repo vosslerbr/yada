@@ -33,3 +33,14 @@ export interface NightfallWeekData extends NightfallWeek {
   activity: DestinyActivityDefinition | undefined;
   modifiers: (DestinyActivityModifierDefinition | undefined)[];
 }
+
+export interface XurItem {
+  costs: { hasConditionalVisibility: boolean; itemHash: number; quantity: number }[];
+  itemHash: number;
+  quantity: number;
+  vendorItemIndex: number;
+}
+export interface XurRes {
+  success: boolean;
+  data: XurItem[];
+}

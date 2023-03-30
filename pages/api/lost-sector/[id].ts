@@ -14,22 +14,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     where: {
       id: Number(id),
     },
-    include: {
-      activity: {
-        include: {
-          modifiers: {
-            include: {
-              activityModifier: true,
-            },
-          },
-        },
-      },
-      rewards: {
-        include: {
-          inventoryItem: true,
-        },
-      },
-    },
   });
 
   if (!lostSector) {

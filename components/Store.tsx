@@ -134,7 +134,7 @@ export default function Store({ children }: Props) {
 
       setApiKey("995db4bb196a42fb8b7426f61f6c8e6e");
       verbose();
-      includeTables(["InventoryItem", "Activity", "ActivityModifier", "Collectible"]);
+      includeTables(["InventoryItem", "Activity", "ActivityModifier", "Collectible", "Vendor"]);
 
       await loadDefs();
 

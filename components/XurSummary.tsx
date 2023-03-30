@@ -9,6 +9,8 @@ import utc from "dayjs/plugin/utc";
 import Link from "next/link";
 import axios from "axios";
 import { Tooltip } from "primereact/tooltip";
+import { XurItem, XurRes } from "@/global";
+import { DestinyVendorDefinition } from "bungie-api-ts/destiny2";
 
 dayjs.extend(utc);
 
@@ -22,16 +24,25 @@ const resetTime = dayjs
 
 export default function XurSummary() {
   const [xurIsHere, setXurIsHere] = useState<boolean>(false);
-  const [xurData, setXurData] = useState<any>(null);
+  const [xurData, setXurData] = useState<XurItem[]>([]);
   const [xurArrival, setXurArrival] = useState<string>("");
+  const [xur, setXur] = useState<DestinyVendorDefinition | undefined>(undefined);
 
   useEffect(() => {
     const getXurData = async () => {
       try {
-        const res = await axios.get("/api/xur");
-        const data = res.data;
+        console.log("Getting Xur data");
 
-        setXurData(data);
+        const { getVendorDef } = await import("@d2api/manifest-web");
+
+        const res = await axios.get("/api/xur");
+        const data: XurRes = res.data;
+
+        const xur = getVendorDef(2190858386);
+
+        setXur(xur);
+
+        setXurData(data.data);
       } catch (err) {
         console.error("Error loading Xur summary: ", err);
       }
@@ -93,25 +104,26 @@ export default function XurSummary() {
           <h2>Xur will be back at {resetTime} on Friday</h2>
           <h3>{xurArrival} from now</h3>
         </div>
-      ) : xurData && xurIsHere ? (
+      ) : xurData.length && xurIsHere ? (
         <div
           className="section-card"
           style={{
-            backgroundImage: `url(https://www.bungie.net${xurData.xur.keyart})`,
+            backgroundImage: `url(https://www.bungie.net${xur?.locations[0].backgroundImagePath})`,
           }}>
           <div className="section-card-inner">
             <Tooltip position="bottom" target=".detail-link" />
             <Link href="/xur" className="detail-link" data-pr-tooltip="View details">
               <div>
                 <h3>Leaves Tuesday at {resetTime}</h3>
-                <h2>{xurData.xur.name}</h2>
+                <h2>{xur?.displayProperties.name}</h2>
               </div>
             </Link>
 
-            <XurExotics items={xurData.items} />
-            <XurQuestExotics items={xurData.items} />
-            <XurLegendaryWeapons items={xurData.items} />
-            <XurLegendaryArmor items={xurData.items} />
+            <XurExotics items={xurData} />
+            <XurQuestExotics items={xurData} />
+            <XurLegendaryWeapons items={xurData} />
+
+            <XurLegendaryArmor />
           </div>
         </div>
       ) : (

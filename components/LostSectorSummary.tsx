@@ -78,7 +78,7 @@ export default function LostSectorSummary() {
           []
         );
 
-        console.log(rewards);
+
 
         return {
           ...lostSector,
